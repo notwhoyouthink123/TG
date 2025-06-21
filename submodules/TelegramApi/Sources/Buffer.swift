@@ -316,6 +316,13 @@ public class Buffer: CustomStringConvertible {
     }
 }
 
+extension Buffer {
+    convenience init(nsData: NSData) {
+        self.init()
+        self.appendBytes(nsData.bytes, length: UInt(nsData.length))
+    }
+}
+
 public class BufferReader {
     private let buffer: Buffer
     public private(set) var offset: UInt = 0

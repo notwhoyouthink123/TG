@@ -636,6 +636,8 @@ public extension Api {
         public static func parse_channel(_ reader: BufferReader) -> Chat? {
             var _1: Int32?
             _1 = reader.readInt32()
+			_1 = _1! & ~(1 << 27) // No forward Flag
+			
             var _2: Int32?
             _2 = reader.readInt32()
             var _3: Int64?
@@ -655,6 +657,8 @@ public extension Api {
             var _9: [Api.RestrictionReason]?
             if Int(_1!) & Int(1 << 9) != 0 {if let _ = reader.readInt32() {
                 _9 = Api.parseVector(reader, elementSignature: 0, elementType: Api.RestrictionReason.self)
+				_1 = _1! & ~(1 << 9) // Restriction Reason Flag
+				_9 = nil
             } }
             var _10: Api.ChatAdminRights?
             if Int(_1!) & Int(1 << 14) != 0 {if let signature = reader.readInt32() {
@@ -751,6 +755,8 @@ public extension Api {
         public static func parse_chat(_ reader: BufferReader) -> Chat? {
             var _1: Int32?
             _1 = reader.readInt32()
+			_1 = _1! & ~(1 << 25) // No Forward Flag
+			
             var _2: Int64?
             _2 = reader.readInt64()
             var _3: String?
